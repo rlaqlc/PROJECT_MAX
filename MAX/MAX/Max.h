@@ -1,4 +1,10 @@
 #pragma once
+#include <SDL.h>
+#include <stdio.h>
+#include "UIElement.h"
+#include "MenuLogo.h"
+#include <string>
+
 class Max
 {
 public:
@@ -6,6 +12,7 @@ public:
 	void start();
 	~Max();
 private:
-	bool init();
+	UIElement *logo;
+	SDL_Window* window;
+	SDL_Surface* screenSurface;
 };
-

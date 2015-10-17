@@ -1,26 +1,11 @@
 #include "Max.h"
-#include "SDL.h"
-#include <stdio.h>
-#include <string>
-#include <iostream>
-using namespace std;
-
-const int SCREEN_WIDTH = 640;
-const int SCREEN_HEIGHT = 480;
 
 Max::Max()
 {
-}
+	logo = new Logo();
+	screenSurface = NULL;
+	window = NULL;
 
-void Max::start()
-{
-	//The window we'll be rendering to
-	SDL_Window* window = NULL;
-
-	//The surface contained by the window
-	SDL_Surface* screenSurface = NULL;
-
-	//Initialize SDL
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
 	{
 		printf("SDL could not initialize! SDL_Error: %s\n", SDL_GetError());
@@ -28,46 +13,59 @@ void Max::start()
 	else
 	{
 		//Create window
-		window = SDL_CreateWindow("SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_BORDERLESS);
+		window = SDL_CreateWindow("SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 640, 480, SDL_WINDOW_SHOWN);
 		if (window == NULL)
 		{
 			printf("Window could not be created! SDL_Error: %s\n", SDL_GetError());
 		}
-		else
-		{
-			//Get window surface
-			screenSurface = SDL_GetWindowSurface(window);
 
-			//Fill the surface white
-			SDL_FillRect(screenSurface, NULL, SDL_MapRGB(screenSurface->format, 0xFF, 0xFF, 0xFF));
-
-			//Update the surface
-			SDL_UpdateWindowSurface(window);
-
-			//Wait two seconds
-			SDL_Delay(20000);
-		}
 	}
-
-	//Destroy window
-	SDL_DestroyWindow(window);
-
-	//Quit SDL subsystems
-	SDL_Quit();
-
 }
 
+void Max::start()
+{
+	logo->setWindow(window);
+	//Load media
+	if (!logo->loadMedia("logo.bmp"))
+	{
+		printf("Failed to load media!\n");
+	}
+	else
+	{
+		//Main loop flag
+		bool quit = false;
+
+		//Event handler
+		SDL_Event e;
+
+		//While application is running
+		while (!quit)
+		{
+			//Handle events on queue
+			while (SDL_PollEvent(&e) != 0)
+			{
+				//User requests quit
+				if (e.type == SDL_QUIT)
+				{
+					quit = true;
+				}
+			}
+			//draw the logo
+			logo->draw();
+		}
+	}
+}
 
 Max::~Max()
 {
-}
+	//Deallocate surface
+	SDL_FreeSurface(screenSurface);
+	screenSurface = NULL;
 
-/****************************************************************
- * INITIALIZE
- * - Initializes SDL and creates a window and sets the caption
- ****************************************************************/
-bool Max::init()
-{
-	bool success = true;
-	return success;
+	//Destroy window
+	SDL_DestroyWindow(window);
+	window = NULL;
+
+	//Quit SDL subsystems
+	SDL_Quit();
 }
