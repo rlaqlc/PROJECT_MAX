@@ -1,25 +1,24 @@
 #pragma once
 #include "UIElement.h"
-#include <SDL_image.h>
 #include <SDL.h>
+#include <SDL_image.h>
 #include <string>
 #include <stdio.h>
-#define LOGO_WIDTH 298
-#define LOGO_HEIGHT 61
 
+#define BUTTON_WIDTH 351
+#define BUTTON_HEIGHT 117
+#define TOTAL_BUTTONS 2
 
-
-class Logo :
+class Button :
 	public UIElement
 {
 public:
-	Logo();
-	Logo(int posX, int posY, int width, int height);
+	Button();
 	void handleEvent(SDL_Event *e);
 	void draw();
-	bool loadMedia(std::string filepath);
-	~Logo();
-private:
+	~Button();
 	void free();
+	bool loadMedia(std::string filepath);
+private:
 };
 
