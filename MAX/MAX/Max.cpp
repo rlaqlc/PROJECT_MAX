@@ -12,7 +12,6 @@ Max::Max()
 	window = NULL;
 	renderer = NULL;
 
-
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
 	{
 		printf("SDL could not initialize! SDL_Error: %s\n", SDL_GetError());
@@ -121,9 +120,7 @@ void Max::start()
 bool Max::loadButton()
 {	
 	bool success = true;
-	//Load sprites
-
-
+	
 	Button * btn = new Button();
 	Button * btn2 = new Button();
 
@@ -146,102 +143,74 @@ bool Max::loadButton()
 
 	it = btnList->begin();
 
-		// clip the button sprite using an array of SDL_Rect BtnSpriteClips
-		// and place it in each button
-			(*it)->getBtnSpriteClips()[0].x = 0;
-			(*it)->getBtnSpriteClips()[0].y = 0 * 117;
-			(*it)->getBtnSpriteClips()[0].w = BUTTON_WIDTH;
-			(*it)->getBtnSpriteClips()[0].h = BUTTON_HEIGHT;
-			++it;
-			(*it)->getBtnSpriteClips()[0].x = 0;
-			(*it)->getBtnSpriteClips()[0].y = 0 * 117;
-			(*it)->getBtnSpriteClips()[0].w = BUTTON_WIDTH;
-			(*it)->getBtnSpriteClips()[0].h = BUTTON_HEIGHT;
-			++it;
-			it = btnList->begin();
-			(*it)->getBtnSpriteClips()[1].x = 0;
-			(*it)->getBtnSpriteClips()[1].y = 1 * 117;
-			(*it)->getBtnSpriteClips()[1].w = BUTTON_WIDTH;
-			(*it)->getBtnSpriteClips()[1].h = BUTTON_HEIGHT;
-			it++;
-			(*it)->getBtnSpriteClips()[1].x = 0;
-			(*it)->getBtnSpriteClips()[1].y = 1 * 117;
-			(*it)->getBtnSpriteClips()[1].w = BUTTON_WIDTH;
-			(*it)->getBtnSpriteClips()[1].h = BUTTON_HEIGHT;
-			it++;
-			it = btnList->begin();
-			(*it)->getBtnSpriteClips()[2].x = 0;
-			(*it)->getBtnSpriteClips()[2].y = 2 * 117;
-			(*it)->getBtnSpriteClips()[2].w = BUTTON_WIDTH;
-			(*it)->getBtnSpriteClips()[2].h = BUTTON_HEIGHT;
-			it++;
-			(*it)->getBtnSpriteClips()[2].x = 0;
-			(*it)->getBtnSpriteClips()[2].y = 2 * 117;
-			(*it)->getBtnSpriteClips()[2].w = BUTTON_WIDTH;
-			(*it)->getBtnSpriteClips()[2].h = BUTTON_HEIGHT;
-			it++;
-			it = btnList->begin();
-			(*it)->getBtnSpriteClips()[3].x = 0;
-			(*it)->getBtnSpriteClips()[3].y = 3 * 117;
-			(*it)->getBtnSpriteClips()[3].w = BUTTON_WIDTH;
-			(*it)->getBtnSpriteClips()[3].h = BUTTON_HEIGHT;
-			it++;
-			(*it)->getBtnSpriteClips()[3].x = 0;
-			(*it)->getBtnSpriteClips()[3].y = 3 * 117;
-			(*it)->getBtnSpriteClips()[3].w = BUTTON_WIDTH;
-			(*it)->getBtnSpriteClips()[3].h = BUTTON_HEIGHT;
-			it++;
+	// clip the button sprite using an array of SDL_Rect BtnSpriteClips
+	// and place it in each button
+	(*it)->getBtnSpriteClips()[0].x = 0;
+	(*it)->getBtnSpriteClips()[0].y = 0 * 117;
+	(*it)->getBtnSpriteClips()[0].w = BUTTON_WIDTH;
+	(*it)->getBtnSpriteClips()[0].h = BUTTON_HEIGHT;
+	++it;
+	(*it)->getBtnSpriteClips()[0].x = 0;
+	(*it)->getBtnSpriteClips()[0].y = 0 * 117;
+	(*it)->getBtnSpriteClips()[0].w = BUTTON_WIDTH;
+	(*it)->getBtnSpriteClips()[0].h = BUTTON_HEIGHT;
+	++it;
+	it = btnList->begin();
+	(*it)->getBtnSpriteClips()[1].x = 0;
+	(*it)->getBtnSpriteClips()[1].y = 1 * 117;
+	(*it)->getBtnSpriteClips()[1].w = BUTTON_WIDTH;
+	(*it)->getBtnSpriteClips()[1].h = BUTTON_HEIGHT;
+	it++;
+	(*it)->getBtnSpriteClips()[1].x = 0;
+	(*it)->getBtnSpriteClips()[1].y = 1 * 117;
+	(*it)->getBtnSpriteClips()[1].w = BUTTON_WIDTH;
+	(*it)->getBtnSpriteClips()[1].h = BUTTON_HEIGHT;
+	it++;
+	it = btnList->begin();
+	(*it)->getBtnSpriteClips()[2].x = 0;
+	(*it)->getBtnSpriteClips()[2].y = 2 * 117;
+	(*it)->getBtnSpriteClips()[2].w = BUTTON_WIDTH;
+	(*it)->getBtnSpriteClips()[2].h = BUTTON_HEIGHT;
+	it++;
+	(*it)->getBtnSpriteClips()[2].x = 0;
+	(*it)->getBtnSpriteClips()[2].y = 2 * 117;
+	(*it)->getBtnSpriteClips()[2].w = BUTTON_WIDTH;
+	(*it)->getBtnSpriteClips()[2].h = BUTTON_HEIGHT;
+	it++;
+	it = btnList->begin();
+	(*it)->getBtnSpriteClips()[3].x = 0;
+	(*it)->getBtnSpriteClips()[3].y = 3 * 117;
+	(*it)->getBtnSpriteClips()[3].w = BUTTON_WIDTH;
+	(*it)->getBtnSpriteClips()[3].h = BUTTON_HEIGHT;
+	it++;
+	(*it)->getBtnSpriteClips()[3].x = 0;
+	(*it)->getBtnSpriteClips()[3].y = 3 * 117;
+	(*it)->getBtnSpriteClips()[3].w = BUTTON_WIDTH;
+	(*it)->getBtnSpriteClips()[3].h = BUTTON_HEIGHT;
+	it++;
 			
-
-
-		it = btnList->begin();
+	it = btnList->begin();
+	
 	// set each button's position
 	(*it)->setPosition((SCREEN_WIDTH - BUTTON_WIDTH) / 2, 160);
 	it++;
 	(*it)->setPosition((SCREEN_WIDTH - BUTTON_WIDTH) / 2, 290);
 	it++;
 	
-	for (int i = 0; i < 4; i++)
-	{
-		button[i].setRenderer(renderer);
-		if (!button[i].loadMedia("resources/ButtonSprite.png"))
-		{
-			printf("Failed to load button sprite texture!\n");
-			success = false;
-		}
-		else
-		{
-			for (int j = 0; j < 4; j++)
-			{
-				// clip the button sprite using an array of SDL_Rect BtnSpriteClips
-				// and place it in each button
-				button[j].getBtnSpriteClips()[i].x = 0;
-				button[j].getBtnSpriteClips()[i].y = i * 117;
-				button[j].getBtnSpriteClips()[i].w = BUTTON_WIDTH;
-				button[j].getBtnSpriteClips()[i].h = BUTTON_HEIGHT;
-			}
-
-		}
-
-	}
-			// set each button's position
-			button[0].setPosition(0, 0);
-			button[1].setPosition(SCREEN_WIDTH - BUTTON_WIDTH, 0);
-			button[2].setPosition(0, SCREEN_HEIGHT - BUTTON_HEIGHT);
-			button[3].setPosition(SCREEN_WIDTH - BUTTON_WIDTH, SCREEN_HEIGHT - BUTTON_HEIGHT);
 	return success;
 }
 
 bool Max::loadLogo()
 {
 	bool success = true;
+	
 	logo->setRenderer(renderer);
+	
 	if (!logo->loadMedia("resources/logo.png"))
 	{
 		printf("Failed to load button sprite texture!\n");
 		success = false;
 	}
-
 
 	logo->setPosition((SCREEN_WIDTH - LOGO_WIDTH) / 2, 45);
 	
