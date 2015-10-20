@@ -15,9 +15,8 @@ class Logo :
 public:
 	Logo();
 	Logo(int posX, int posY, int width, int height);
-	void handleEvent(SDL_Event *e);
+	void setSprite(SDL_Event *e);
 	void draw();
-	bool loadMedia(std::string filepath);
 	~Logo();
 private:
 	void free();

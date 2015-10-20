@@ -3,55 +3,29 @@
 UIElement::UIElement()
 {
 	logo = NULL;
-	optimizedSurface = NULL;
-	loadedSurface = NULL;
-	window = NULL;
-	position.x = 0;
-	position.y = 0;
-	this->posX = 0;
-	this->posY = 0;
-	this->width = 0;
-	this->height = 0;
 	mPosition.x = 0;
 	mPosition.y = 0;
-	BtnSpriteClips = new SDL_Rect[BUTTON_SPRITE_TOTAL];
+	mPosition.w = 0;
+	mPosition.h = 0;
+	btnSpriteClips = new SDL_Rect[BUTTON_SPRITE_TOTAL];
 	btnSprite = BUTTON_SPRITE_MOUSE_OUT;
 	texture = NULL;
-	width = 0;
-	height = 0;
 	renderer = NULL;
+	font = NULL;
 }
-
 
 UIElement::~UIElement()
 {
-	//Deallocate
-	SDL_FreeSurface(loadedSurface);
-	loadedSurface = NULL;
-
-	//Deallocate surface
-	SDL_FreeSurface(optimizedSurface);
-	optimizedSurface = NULL;
-
 	SDL_FreeSurface(logo);
 	logo = NULL;
-
-	window = NULL;
 }
 
 UIElement::UIElement(int posX, int posY, int width, int height)
 {
-	this->posX = posX;
-	this->posY = posY;
-	this->width = width;
-	this->height = height;
-}
-
-
-void UIElement::setWindow(SDL_Window * window)
-{
-	this->window = window;
-
+	this->mPosition.x = posX;
+	this->mPosition.y = posY;
+	this->mPosition.w = width;
+	this->mPosition.h = height;
 }
 
 void UIElement::setRenderer(SDL_Renderer * renderer)
@@ -61,32 +35,76 @@ void UIElement::setRenderer(SDL_Renderer * renderer)
 
 void UIElement::setPosition(int posX, int posY)
 {
-	mPosition.x = posX;
-	mPosition.y = posY;
+	this->mPosition.x = posX;
+	this->mPosition.y = posY;
 }
 
-void UIElement::setSize(int width, int height)
+void UIElement::setDimension(int width, int height)
 {
-	this->width = width;
-	this->height = height;
-}
-
-void UIElement::handleEvent(SDL_Event * e)
-{
+	this->mPosition.w = width;
+	this->mPosition.h = height;
 }
 
 bool UIElement::loadMedia(std::string filepath)
 {
-	//Loading success flag
-	bool success = true;
+	//Get rid of preexisting texture
+	free();
 
-	//Load splash image
-	logo = SDL_LoadBMP(filepath.c_str());
-	
-	if (logo == NULL)
-		success = false;
+	if (renderer == NULL)
+	{
+		printf("Renderer could not be created! SDL Error: %s\n", SDL_GetError());
+	}
+	else
+	{
+		//Initialize renderer color
+		SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
 
-	return success;
+		//Initialize PNG loading
+		int imgFlags = IMG_INIT_PNG;
+		if (!(IMG_Init(imgFlags) & imgFlags))
+		{
+			printf("SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError());
+		}
+	}
+
+	//The final texture
+	SDL_Texture* newTexture = NULL;
+
+	//Load image at specified path
+	SDL_Surface *loadedSurface = IMG_Load(filepath.c_str());
+
+	if (loadedSurface == NULL)
+	{
+		printf("Unable to load image %s! SDL Error: %s\n", filepath.c_str(), SDL_GetError());
+	}
+	else
+	{
+		//Color key image
+		SDL_SetColorKey(loadedSurface, SDL_TRUE, SDL_MapRGB(loadedSurface->format, 0, 0xFF, 0xFF));
+
+		//Create texture from surface pixels
+		newTexture = SDL_CreateTextureFromSurface(renderer, loadedSurface);
+		if (newTexture == NULL)
+		{
+			printf("Unable to create texture from %s! SDL Error: %s\n", filepath.c_str(), SDL_GetError());
+		}
+		else
+		{
+			//Get image dimensions
+			mPosition.w = loadedSurface->w;
+			mPosition.h = loadedSurface->h;
+		}
+
+		//Get rid of old loaded surface
+		SDL_FreeSurface(loadedSurface);
+		loadedSurface = NULL;
+	}
+
+
+	//Return success
+	texture = newTexture;
+	newTexture = NULL;
+	return texture != NULL;
 }
 
 void UIElement::free()
@@ -95,7 +113,7 @@ void UIElement::free()
 
 SDL_Rect * UIElement::getBtnSpriteClips()
 {
-	return BtnSpriteClips;
+	return btnSpriteClips;
 }
 
 SDL_Renderer * UIElement::getRenderer()
@@ -103,7 +121,7 @@ SDL_Renderer * UIElement::getRenderer()
 	return renderer;
 }
 
-SDL_Point UIElement::getPosition()
+SDL_Rect UIElement::getPosition()
 {
 	return mPosition;
 }

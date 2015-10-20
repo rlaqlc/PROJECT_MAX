@@ -1,6 +1,8 @@
 #pragma once
+
 #include <SDL.h>
 #include <string>
+#include <SDL_ttf.h>
 #include <SDL_image.h>
 #include <stdio.h>
 
@@ -19,31 +21,23 @@ public:
 	UIElement();
 	~UIElement();
 	UIElement(int posX, int posY, int width, int height);
-	void setWindow(SDL_Window *window);
 	void setRenderer(SDL_Renderer *renderer);
 	void setPosition(int posX, int posY);
-	void setSize(int width, int height);
-	virtual void handleEvent(SDL_Event *e) = 0;
-	virtual bool loadMedia(std::string filepath);
-	virtual void draw() = 0;
-	virtual void free();
+	void setDimension(int width, int height);
 	SDL_Rect *getBtnSpriteClips();
 	SDL_Renderer *getRenderer();
-	SDL_Point getPosition();
+	SDL_Rect getPosition();
+	virtual bool loadMedia(std::string filepath);
+	void free();
+	virtual void draw() = 0;
+	virtual void setSprite(SDL_Event *e) = 0;
 protected:
-	int posX;
-	int posY;
-	int width;
-	int height;
-	SDL_Rect *BtnSpriteClips;
+	SDL_Rect *btnSpriteClips;
 	ButtonSprite btnSprite;
-	SDL_Point mPosition;
+	SDL_Rect mPosition;
 	SDL_Texture *texture;
 	SDL_Renderer* renderer;
-	SDL_Surface *optimizedSurface;
-	SDL_Surface *loadedSurface;
 	SDL_Surface *logo;
-	SDL_Rect position;
-	SDL_Window *window;
+	TTF_Font *font;
 };
 

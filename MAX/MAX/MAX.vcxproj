@@ -41,8 +41,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>C:\mingw_dev_lib\SDL2_image-2.0.0\include;C:\sdl_develop\SDL2-2.0.3\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\mingw_dev_lib\SDL2_image-2.0.0\lib\x86;C:\sdl_develop\SDL2-2.0.3\lib\x86;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\sdl_develop\SDL2_ttf-2.0.12\include;C:\mingw_dev_lib\SDL2_image-2.0.0\include;C:\sdl_develop\SDL2-2.0.3\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\sdl_develop\SDL2_ttf-2.0.12\lib\x86;C:\mingw_dev_lib\SDL2_image-2.0.0\lib\x86;C:\sdl_develop\SDL2-2.0.3\lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -52,7 +52,7 @@
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Console</SubSystem>
     </Link>
   </ItemDefinitionGroup>
@@ -71,16 +71,24 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Activity.h" />
+    <ClInclude Include="Background.h" />
     <ClInclude Include="Button.h" />
+    <ClInclude Include="Chat.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="Max.h" />
+    <ClInclude Include="Menu.h" />
     <ClInclude Include="MenuLogo.h" />
     <ClInclude Include="UIElement.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Activity.cpp" />
+    <ClCompile Include="Background.cpp" />
     <ClCompile Include="Button.cpp" />
+    <ClCompile Include="Chat.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Max.cpp" />
+    <ClCompile Include="Menu.cpp" />
     <ClCompile Include="MenuLogo.cpp" />
     <ClCompile Include="UIElement.cpp" />
   </ItemGroup>

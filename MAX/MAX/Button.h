@@ -14,11 +14,9 @@ class Button :
 {
 public:
 	Button();
-	void handleEvent(SDL_Event *e);
+	void setSprite(SDL_Event *e);
 	void draw();
 	~Button();
 	void free();
-	bool loadMedia(std::string filepath);
-private:
 };
 

@@ -1,17 +1,65 @@
 ﻿#include "Max.h"
-#include <iostream>
-using namespace std;
+
 
 Max::Max()
 {
-	logo = new Logo();
-	button = new Button[4];
-	btnList = new list<UIElement*>();
-
-	screenSurface = NULL;
 	window = NULL;
 	renderer = NULL;
+	// initialize SDL
+	init();
 
+	logo = new Logo();
+	btnList = new list<UIElement*>();
+	menuActivity = new Menu(window);
+
+
+}
+
+void Max::start()
+{
+	menuActivity->start();
+}
+
+void Max::free()
+{
+	SDL_DestroyRenderer(renderer);
+	
+	//Set texture filtering to linear
+	if (!SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1"))
+	{
+		printf("Warning: Linear texture filtering not enabled!");
+	}
+
+	// create new renderer for the program
+	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+
+	// flip it
+	SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
+	SDL_RenderClear(renderer);
+	SDL_RenderPresent(renderer);
+}
+
+void Max::startChat()
+{
+	free();
+	bool quit = false;
+
+	SDL_Event e;
+	cout << "Start Chat Activity Started!\n";
+	while (!quit)
+	{
+		while (SDL_PollEvent(&e) != 0)
+		{
+			if (e.type == SDL_QUIT)
+			{
+				quit = true;
+			}
+		}
+	}
+}
+
+void Max::init()
+{
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
 	{
 		printf("SDL could not initialize! SDL_Error: %s\n", SDL_GetError());
@@ -30,90 +78,10 @@ Max::Max()
 			printf("Warning: Linear texture filtering not enabled!");
 		}
 
-		renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+		SDL_Cursor* cursor;
+		cursor = SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_HAND);
+		SDL_SetCursor(cursor);
 
-	}
-}
-
-void Max::start()
-{
-	logo->setWindow(window);
-
-	//Load media
-	loadButton();
-	if (!loadLogo())
-	{
-		printf("Failed to load media!\n");
-	}
-	else
-	{
-		//Main loop flag
-		bool quit = false;
-
-		//Event handler
-		SDL_Event e;
-		int x;
-		int y;
-		//While application is running
-		while (!quit)
-		{
-			//Handle events on queue
-			while (SDL_PollEvent(&e) != 0)
-			{
-				SDL_GetMouseState(&x, &y); // current cursor position
-
-				for (std::list<UIElement*>::iterator it = btnList->begin(); it != btnList->end(); it++) 
-				{
-					(*it)->handleEvent(&e);
-				}
-				list<UIElement*>::iterator it = btnList->begin();
-				it++;
-				list<UIElement*>::iterator it2 = btnList->begin();
-				if (isOnButton(x, y, it)) // pass current cursor position and an iterator
-				{
-					cout << "you are on button2\n";
-					switch (e.type)
-					{
-						case SDL_MOUSEBUTTONDOWN:
-							quit = true;
-							break;
-					}
-				}
-				else if (isOnButton(x, y, it2))
-				{
-					cout << "you are on button\n";
-					switch (e.type)
-					{
-					case SDL_MOUSEBUTTONDOWN:
-						cout << "click\n";
-						break;
-					}
-				}
-				
-				if (e.type == SDL_QUIT)
-				{
-					quit = true;
-				}
-			}
-
-			SDL_SetRenderDrawColor(logo->getRenderer(), 0xFF, 0xFF, 0xFF, 0xFF);
-			SDL_RenderClear(logo->getRenderer());
-			for (std::list<UIElement*>::iterator it = btnList->begin(); it != btnList->end(); it++) 
-			{
-				SDL_SetRenderDrawColor((*it)->getRenderer(), 0xFF, 0xFF, 0xFF, 0xFF);
-				SDL_RenderClear((*it)->getRenderer());
-			}		
-
-			logo->draw();
-			for (std::list<UIElement*>::iterator it = btnList->begin(); it != btnList->end(); it++) 
-			{
-				(*it)->draw();
-			}
-
-			std::list<UIElement*>::iterator it = btnList->begin();
-			SDL_RenderPresent((*it)->getRenderer());
-			SDL_RenderPresent(logo->getRenderer());
-		}
 	}
 }
 
@@ -136,9 +104,9 @@ bool Max::loadButton()
 
 	it = btnList->begin();
 
-	(*it)->loadMedia("resources/ButtonSprite.png");
+	(*it)->loadMedia("resources/ButtonSpriteStart.png");
 	++it;
-	(*it)->loadMedia("resources/ButtonSprite.png");
+	(*it)->loadMedia("resources/ButtonSpriteQuit.png");
 	++it;
 
 	it = btnList->begin();
@@ -196,7 +164,8 @@ bool Max::loadButton()
 	it++;
 	(*it)->setPosition((SCREEN_WIDTH - BUTTON_WIDTH) / 2, 290);
 	it++;
-	
+
+
 	return success;
 }
 
@@ -219,10 +188,6 @@ bool Max::loadLogo()
 
 Max::~Max()
 {
-	//Deallocate surface
-	SDL_FreeSurface(screenSurface);
-	screenSurface = NULL;
-
 	//Destroy window
 	SDL_DestroyWindow(window);
 	window = NULL;
