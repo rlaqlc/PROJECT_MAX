@@ -6,7 +6,12 @@ class Chat :
 public:
 	Chat();
 	void start();
-	
 	~Chat();
+private:
+	void playStatusMessage(int currentTime);
+	void initViewports();
+	Viewport * displayArea;
+	Viewport * inputArea;
+
 };
 

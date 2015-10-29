@@ -1,4 +1,5 @@
 #include "UIElement.h"
+#include <iostream>
 
 UIElement::UIElement()
 {
@@ -9,9 +10,17 @@ UIElement::UIElement()
 	mPosition.h = 0;
 	btnSpriteClips = new SDL_Rect[BUTTON_SPRITE_TOTAL];
 	btnSprite = BUTTON_SPRITE_MOUSE_OUT;
+	cursorSpriteClips = new SDL_Rect[CURSOR_SPRITE_TOTAL];
+	cursorSprite = CURSOR_SPRITE_OFF;
 	texture = NULL;
 	renderer = NULL;
 	font = NULL;
+	
+
+
+
+
+
 }
 
 UIElement::~UIElement()
@@ -114,6 +123,11 @@ void UIElement::free()
 SDL_Rect * UIElement::getBtnSpriteClips()
 {
 	return btnSpriteClips;
+}
+
+SDL_Rect * UIElement::getCursorSpriteClips()
+{
+	return cursorSpriteClips;
 }
 
 SDL_Renderer * UIElement::getRenderer()

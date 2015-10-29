@@ -9,7 +9,13 @@
 #include "MenuLogo.h"
 #include "Button.h"
 #include "Background.h"
+#include "Viewport.h"
+#include "Text.h"
+#include "AI.h"
+#include "Cursor.h"
+#include "han2unicode.h"
 #include <list>
+#include <string>
 
 class Activity
 {
@@ -27,6 +33,8 @@ protected:
 	UIElement *logo;
 	UIElement *button;
 	UIElement *background;
-	std::list<UIElement*> *btnList;
+	UIElement *cursor;
+	Text *text;
+	std::list<UIElement*> *btnList; // 2 buttons
 };
 

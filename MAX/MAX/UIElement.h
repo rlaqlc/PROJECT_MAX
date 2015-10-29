@@ -3,8 +3,16 @@
 #include <SDL.h>
 #include <string>
 #include <SDL_ttf.h>
+#include <iostream>
 #include <SDL_image.h>
 #include <stdio.h>
+
+enum CursorSprite
+{
+	CURSOR_SPRITE_OFF = 0,
+	CURSOR_SPRITE_ON = 1,
+	CURSOR_SPRITE_TOTAL = 2
+};
 
 enum ButtonSprite
 {
@@ -25,15 +33,18 @@ public:
 	void setPosition(int posX, int posY);
 	void setDimension(int width, int height);
 	SDL_Rect *getBtnSpriteClips();
+	SDL_Rect *getCursorSpriteClips();
 	SDL_Renderer *getRenderer();
 	SDL_Rect getPosition();
 	virtual bool loadMedia(std::string filepath);
 	void free();
-	virtual void draw() = 0;
+	virtual void draw(SDL_Rect *clip = NULL) = 0;
 	virtual void setSprite(SDL_Event *e) = 0;
 protected:
 	SDL_Rect *btnSpriteClips;
+	SDL_Rect *cursorSpriteClips;
 	ButtonSprite btnSprite;
+	CursorSprite cursorSprite;
 	SDL_Rect mPosition;
 	SDL_Texture *texture;
 	SDL_Renderer* renderer;

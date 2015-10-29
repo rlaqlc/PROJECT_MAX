@@ -49,6 +49,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -72,25 +73,43 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Activity.h" />
+    <ClInclude Include="AI.h" />
     <ClInclude Include="Background.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="Chat.h" />
+    <ClInclude Include="Cursor.h" />
+    <ClInclude Include="han2unicode.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="Max.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="MenuLogo.h" />
+    <ClInclude Include="NotImplementedException.h" />
+    <ClInclude Include="Text.h" />
+    <ClInclude Include="Timer.h" />
     <ClInclude Include="UIElement.h" />
+    <ClInclude Include="Viewport.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Activity.cpp" />
+    <ClCompile Include="AI.cpp" />
     <ClCompile Include="Background.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Chat.cpp" />
+    <ClCompile Include="Cursor.cpp" />
+    <ClCompile Include="han2unicode.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Max.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="MenuLogo.cpp" />
+    <ClCompile Include="NotImplementedException.cpp" />
+    <ClCompile Include="Text.cpp" />
+    <ClCompile Include="Timer.cpp" />
     <ClCompile Include="UIElement.cpp" />
+    <ClCompile Include="Viewport.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
+    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

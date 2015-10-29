@@ -6,7 +6,7 @@ class Background :
 public:
 	Background();
 	void setSprite(SDL_Event *e);
-	void draw();
+	void draw(SDL_Rect *clip = NULL);
 	~Background();
 };
 

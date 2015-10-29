@@ -16,7 +16,7 @@ public:
 	Logo();
 	Logo(int posX, int posY, int width, int height);
 	void setSprite(SDL_Event *e);
-	void draw();
+	void draw(SDL_Rect *clip = NULL);
 	~Logo();
 private:
 	void free();

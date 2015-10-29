@@ -15,7 +15,7 @@ class Button :
 public:
 	Button();
 	void setSprite(SDL_Event *e);
-	void draw();
+	void draw(SDL_Rect *clip = NULL);
 	~Button();
 	void free();
 };

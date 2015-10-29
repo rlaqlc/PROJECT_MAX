@@ -62,7 +62,8 @@ void Button::setSprite(SDL_Event * e)
 	}
 }
 
-void Button::draw()
+
+void Button::draw(SDL_Rect *clip)
 {
 	//Set clip rendering dimensions if there is a sprite for the object
 	if (btnSpriteClips != NULL)

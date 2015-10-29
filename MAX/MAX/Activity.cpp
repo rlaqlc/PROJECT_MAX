@@ -5,8 +5,13 @@ Activity::Activity()
 	window = NULL;
 	renderer = NULL;
 	logo = new Logo();
+
+
 	btnList = new std::list<UIElement*>();
 	background = new Background();
+	text = new Text();
+	cursor = new Cursor();
+
 }
 
 Activity::Activity(SDL_Window * window)
@@ -65,6 +70,7 @@ void Activity::createNewRenderer()
 
 	// create new renderer for the program
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+
 
 	// flip it
 	SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
